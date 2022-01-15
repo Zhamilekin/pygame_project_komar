@@ -211,6 +211,7 @@ def end_screen():
     screen.fill((0, 0, 0))
     intro_text = ["score: ", "",
                   "from zhamilya and dameli", "", "", "", "",
+                  "", "", "", "", "",
                   "thanks!"]
     fon = pygame.transform.scale(load_image('intro.png'), (width, height))
     screen.blit(pygame.transform.scale(fon, [200, 200]), (150, 150))
