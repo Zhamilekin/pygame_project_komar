@@ -10,7 +10,7 @@ clock = pygame.time.Clock()
 
 
 def load_image(name, colorkey=None):
-    fullname = os.path.join('data', name)
+    fullname = os.path.join(name)
     image = pygame.image.load(fullname)
     if colorkey is not None:
         image = image.convert()
@@ -33,7 +33,7 @@ class Islands(pygame.sprite.Sprite):
     def __init__(self, x, hgt, *group):
         super().__init__(platforms)
         self.image = load_image('baget.png')
-        self.image = pygame.transform.scale(self.image, (205, 30))
+        # self.image = pygame.transform.scale(self.image, (205, 30))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = hgt
@@ -46,9 +46,9 @@ class Islands(pygame.sprite.Sprite):
 
 class Fumigator(pygame.sprite.Sprite):
     def __init__(self, x, hgt, *group):
-        super().__init__(fumigator)
-        self.image = load_image('fumigator1.png')
-        self.image = pygame.transform.scale(self.image, (30, 70))
+        super().__init__(platforms)
+        self.image = load_image('fumigator.jpg', -1)
+        self.image = pygame.transform.scale(self.image, (75, 35))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = hgt
@@ -68,7 +68,7 @@ class Komar(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         # self.mask = pygame.mask.from_surface(self.image)
         self.velocity = 0
-        self.rect.center = (280, 300)
+        self.rect.center = (350, 300)
         self.side = False
 
     def play(self, frst):
@@ -105,7 +105,6 @@ class Komar(pygame.sprite.Sprite):
                     self.velocity = -20
         if pygame.sprite.spritecollideany(self, fumigator):
             self.kill()
-
         if frst:
             if self.rect.bottom + dy > 600:
                 dy = 0
@@ -126,6 +125,8 @@ class Komar(pygame.sprite.Sprite):
 
         return up
 
+
+switch = True
 komar = Komar()
 all_sprites.add(komar)
 
@@ -136,10 +137,10 @@ class GameStates():
         self.start = True
         self.limit = 15
         self.switch = True
-        self.h = 350
-        self.island = Islands(200, 440)
+        self.h = 400
+        self.island = Islands(222, 440)
+        self.fumigator = Fumigator(222, 440)
         platforms.add(self.island)
-        self.fumigator = Fumigator(-40, 250)
         self.num_y1 = 150
 
     def intro(self):
@@ -165,8 +166,8 @@ class GameStates():
             screen.blit(background, (0, 0))
             all_sprites.draw(screen)
             platforms.draw(screen)
-            fumigator.draw(screen)
-
+        else:
+            end_screen()
         if len(platforms) < self.limit:
             self.island = Islands(random.randint(-100, 350), self.island.rect.y - random.randint(140, 155))
             platforms.add(self.island)
@@ -174,7 +175,6 @@ class GameStates():
             fumigator.add(self.fumigator)
             self.num_y1 -= 150
         platforms.update(up)
-        fumigator.update(up)
         pygame.display.flip()
 
     def state_image(self):
@@ -191,7 +191,7 @@ def start_screen():
     global gr, x, y
     intro_text = ["Komar-parizhanin", "",
                   "welcome"]
-    fon = pygame.transform.scale(load_image('intro.png'), (width, height))
+    fon = pygame.transform.scale(load_image('fon.jpg'), (width, height))
     screen.blit(pygame.transform.scale(fon, [200, 200]), (150, 150))
     font = pygame.font.Font(None, 30)
     text_coord = 50
@@ -213,7 +213,7 @@ def end_screen():
                   "from zhamilya and dameli", "", "", "", "",
                   "", "", "", "", "",
                   "thanks!"]
-    fon = pygame.transform.scale(load_image('intro.png'), (width, height))
+    fon = pygame.transform.scale(load_image('fon.jpg'), (width, height))
     screen.blit(pygame.transform.scale(fon, [200, 200]), (150, 150))
     font = pygame.font.Font(None, 30)
     text_coord = 50
