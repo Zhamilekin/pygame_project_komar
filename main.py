@@ -9,7 +9,7 @@ screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 
 
-def load_image(name, colorkey=None):
+def load_image(name, colorkey=None): # функция загрузки картинок
     fullname = os.path.join('data', name)
     image = pygame.image.load(fullname)
     if colorkey is not None:
@@ -22,14 +22,14 @@ def load_image(name, colorkey=None):
     return image
 
 
-all_sprites = pygame.sprite.Group()
+all_sprites = pygame.sprite.Group() # спрайты
 fumigator = pygame.sprite.Group()
 platforms = pygame.sprite.Group()
 background = load_image("eiffel.png")
 background = pygame.transform.scale(background, (550, 600))
 
 
-class Islands(pygame.sprite.Sprite):
+class Islands(pygame.sprite.Sprite): # класс для островов
     def __init__(self, x, hgt, *group):
         super().__init__(platforms)
         self.image = load_image('baget.png')
@@ -44,7 +44,7 @@ class Islands(pygame.sprite.Sprite):
             self.kill()
 
 
-class Fumigator(pygame.sprite.Sprite):
+class Fumigator(pygame.sprite.Sprite):# класс для фумигаторов
     def __init__(self, x, hgt, *group):
         super().__init__(fumigator)
         self.image = load_image('fumigator.png')
@@ -59,7 +59,7 @@ class Fumigator(pygame.sprite.Sprite):
             self.kill()
 
 
-class Komar(pygame.sprite.Sprite):
+class Komar(pygame.sprite.Sprite): # класс для комара
     image = load_image("komar.png")
 
     def __init__(self, *group):
@@ -129,7 +129,7 @@ komar = Komar()
 all_sprites.add(komar)
 
 
-class GameStates():
+class GameStates(): # тело игры
     def __init__(self):
         self.state = 'intro'
         self.start = True
@@ -206,7 +206,7 @@ class GameStates():
 game_state = GameStates()
 
 
-def start_screen():
+def start_screen(): # стартовое окно
     global gr, x, y
     intro_text = ["Komar-parizhanin", "",
                   "welcome"]
@@ -225,7 +225,7 @@ def start_screen():
         screen.blit(text_welcome, intro_rect)
 
 
-def end_screen(final_score):
+def end_screen(final_score): # конечное окно
     global gr, x, y
     global game_score
     screen.fill((0, 0, 0))
