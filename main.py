@@ -37,6 +37,7 @@ class Islands(pygame.sprite.Sprite): # класс для островов
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = hgt
+         # бесконечные острова
 
     def update(self, upp):
         self.rect.y += upp
@@ -52,6 +53,7 @@ class Fumigator(pygame.sprite.Sprite):# класс для фумигаторов
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = hgt
+         # бесконечные фумигаторы
 
     def update(self, upp):
         self.rect.y += upp
@@ -77,6 +79,7 @@ class Komar(pygame.sprite.Sprite): # класс для комара
         dx = 0
         dy = 0
         userInput = pygame.key.get_pressed()
+        # движение комара
 
         if userInput[pygame.K_LEFT]:
             dx = -10
@@ -96,6 +99,7 @@ class Komar(pygame.sprite.Sprite): # класс для комара
             dx = -self.rect.left
         if self.rect.right + dx > 550:
             dx = 550 - self.rect.right
+            # столкновение с островами
 
         collision_plat = pygame.sprite.spritecollide(self, platforms, False)
         if collision_plat:
